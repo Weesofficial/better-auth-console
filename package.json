@@ -41,6 +41,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p ui",
     "prepublishOnly": "npm run build && npm run typecheck && npm test",
     "pretest": "npm run build:ui",
+    "pretypecheck": "npm run build:ui",
     "test": "node --import tsx --test --test-timeout=20000 --test-reporter=dot test/*.test.ts"
   },
   "dependencies": {
