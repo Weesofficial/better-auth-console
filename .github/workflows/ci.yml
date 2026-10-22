@@ -30,8 +30,9 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
+      # Both, or npm mixes core from the lockfile with an older better-auth.
       - if: matrix.deps != 'lockfile'
-        run: npm install --no-audit --no-fund --legacy-peer-deps better-auth@${{ matrix.deps }}
+        run: npm install --no-audit --no-fund --legacy-peer-deps better-auth@${{ matrix.deps }} @better-auth/core@${{ matrix.deps }}
       - run: npm run typecheck
       # Builds the UI first (pretest); Node 20 runs only the memory adapter.
       - run: npm test
