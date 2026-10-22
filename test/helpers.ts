@@ -3,15 +3,17 @@ import { memoryAdapter } from "better-auth/adapters/memory";
 import { getMigrations } from "better-auth/db/migration";
 import { admin, twoFactor, username } from "better-auth/plugins";
 import { shield, type ShieldOptions } from "better-auth-shield";
-import { DatabaseSync } from "node:sqlite";
 import { console as betterAuthConsole, type ConsoleOptions } from "../src/index.js";
+
+// node:sqlite arrived in Node 22; on Node 20 only the memory adapter runs.
+const sqlite = await import("node:sqlite").catch(() => null);
 
 export const PASSWORD = "correct-horse-battery";
 export const ADMIN = "root@example.com";
 export const TARGET = "ada@example.com";
 const ORIGIN = "http://localhost:3000";
 
-export const DATABASES = ["memory", "sqlite"] as const;
+export const DATABASES = sqlite ? (["memory", "sqlite"] as const) : (["memory"] as const);
 
 /**
  * A real Better Auth app with username, admin, twoFactor, shield and the
@@ -35,7 +37,7 @@ export async function setup({
     baseURL: ORIGIN,
     database:
       database === "sqlite"
-        ? new DatabaseSync(":memory:")
+        ? new sqlite!.DatabaseSync(":memory:")
         : memoryAdapter({
             user: [],
             session: [],
