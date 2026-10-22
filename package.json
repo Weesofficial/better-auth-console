@@ -5,17 +5,71 @@
   "license": "MIT",
   "keywords": [
     "better-auth",
-    "auth",
+    "better-auth-plugin",
+    "admin",
+    "dashboard",
     "security",
-    "dashboard"
+    "audit-log"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Weesofficial/better-auth-console.git"
   },
   "homepage": "https://github.com/Weesofficial/better-auth-console#readme",
+  "bugs": {
+    "url": "https://github.com/Weesofficial/better-auth-console/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
   "files": [
-    "README.md",
-    "LICENSE"
-  ]
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build:ui": "vite build --config ui/vite.config.ts && node scripts/embed-ui.mjs",
+    "build": "npm run build:ui && tsup",
+    "dev": "node --import tsx scripts/dev.ts",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p ui",
+    "prepublishOnly": "npm run build && npm run typecheck && npm test",
+    "pretest": "npm run build:ui",
+    "test": "node --import tsx --test --test-timeout=20000 --test-reporter=dot test/*.test.ts"
+  },
+  "dependencies": {
+    "zod": "^4.5.4"
+  },
+  "peerDependencies": {
+    "@better-auth/core": ">=1.7.0",
+    "better-auth": ">=1.7.0",
+    "better-auth-shield": ">=0.0.1"
+  },
+  "devDependencies": {
+    "@better-auth/core": "^1.7.12",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "better-auth": "^1.7.12",
+    "better-auth-shield": "github:Weesofficial/better-auth-shield#9d704b4",
+    "lucide-react": "^1.61.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^8.3.5"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
 }
