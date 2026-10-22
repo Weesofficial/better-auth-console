@@ -1,0 +1,21 @@
+{
+  "name": "better-auth-console",
+  "version": "0.0.1",
+  "description": "Self-hosted admin console for Better Auth that runs inside your app and reads your own database: users, sessions, lockouts and security events.",
+  "license": "MIT",
+  "keywords": [
+    "better-auth",
+    "auth",
+    "security",
+    "dashboard"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Weesofficial/better-auth-console.git"
+  },
+  "homepage": "https://github.com/Weesofficial/better-auth-console#readme",
+  "files": [
+    "README.md",
+    "LICENSE"
+  ]
+}
